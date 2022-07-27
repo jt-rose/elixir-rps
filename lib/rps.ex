@@ -3,7 +3,15 @@ defmodule RPS do
   Documentation for `RPS`.
   """
 
-  def get_game_result(player, ai) do
+  defp get_player_choice do
+    :rock
+  end
+
+  defp get_ai_choice do
+    :scissors
+  end
+
+  defp get_game_result(player, ai) do
     case {player, ai} do
       {player, player} -> :tie
       {:rock, :paper} -> :loss
@@ -14,6 +22,13 @@ defmodule RPS do
       {:scissors, :paper} -> :win
     end
   end
+
+  def play do
+    player = get_player_choice()
+    ai = get_ai_choice()
+    result = get_game_result(player, ai)
+    IO.puts(result)
+  end
 end
 
-IO.puts RPS.get_game_result(:rock, :scissors)
+RPS.play()
