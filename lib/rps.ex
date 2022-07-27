@@ -4,7 +4,13 @@ defmodule RPS do
   """
 
   defp get_player_choice do
-    :rock
+    choice = IO.gets "r) rock, p) paper, or s) scissors ?"
+    case String.trim(choice) do
+      "r" -> :rock
+      "p" -> :paper
+      "s" -> :scissors
+      _ -> get_player_choice()
+    end
   end
 
   defp get_ai_choice do
