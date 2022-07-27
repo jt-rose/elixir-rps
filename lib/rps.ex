@@ -8,7 +8,12 @@ defmodule RPS do
   end
 
   defp get_ai_choice do
-    :scissors
+    random_number = :rand.uniform(3)
+    case random_number do
+      1 -> :rock
+      2 -> :paper
+      3 -> :scissors
+    end
   end
 
   defp get_game_result(player, ai) do
@@ -26,8 +31,14 @@ defmodule RPS do
   def play do
     player = get_player_choice()
     ai = get_ai_choice()
+    IO.puts "You played #{player} and the opponent played #{ai}"
+
     result = get_game_result(player, ai)
-    IO.puts(result)
+    case result do
+      :win -> IO.puts "You win!"
+      :loss -> IO.puts "Oh no! You lost!"
+      :tie -> IO.puts "A tie!"
+    end
   end
 end
 
