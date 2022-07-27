@@ -22,7 +22,7 @@ defmodule RPS do
     end
   end
 
-  defp get_game_result(player, ai) do
+  defp get_round_result(player, ai) do
     case {player, ai} do
       {player, player} -> :tie
       {:rock, :paper} -> :loss
@@ -34,18 +34,37 @@ defmodule RPS do
     end
   end
 
-  def play do
+  defp play_round do
     player = get_player_choice()
     ai = get_ai_choice()
     IO.puts "You played #{player} and the opponent played #{ai}"
 
-    result = get_game_result(player, ai)
+    result = get_round_result(player, ai)
+    result
+  end
+
+  defp convert_result_to_int(result) do
     case result do
-      :win -> IO.puts "You win!"
-      :loss -> IO.puts "Oh no! You lost!"
-      :tie -> IO.puts "A tie!"
+      :win -> 1
+      :loss -> -1
+      :tie -> 0
+    end
+  end
+
+  def play_3_rounds do
+    round_1 = play_round()
+    round_2 = play_round()
+    round_3 = play_round()
+
+    rounds = [round_1, round_2, round_3]
+    result = rounds |> Enum.map(&convert_result_to_int/1) |> Enum.sum()
+
+    case result do
+      x when x > 0 -> IO.puts "You win!"
+      x when x < 0 -> IO.puts "Oh no! You lost!"
+      _ -> IO.puts "A tie!"
     end
   end
 end
 
-RPS.play()
+RPS.play_3_rounds()
